@@ -1,15 +1,26 @@
 const express = require('express');
+const cors = require('cors');
 
 class Server{
 
     constructor(){
         this.app = express();
+        this.middlewares();
         this.routes();
-        this.app.use(express.json());
     }
 
+
+    middlewares(){
+        this.app.use(express.json());
+        this.app.use(cors());
+    }
+
+    /**
+     * Definimos las rutas
+     */
     routes(){
-        this.app.use('/', require('../routes/users'));
+        this.app.use('/api/users', require('../routes/users'));
+        this.app.use('/api/products', require('../routes/product.routes'));
     }
 
     listen(){
